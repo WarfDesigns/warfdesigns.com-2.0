@@ -1,0 +1,11 @@
+1. Need to connect API with name silo.
+
+(Notes from Name Silo)
+
+Here’s how it works:
+Endpoint:
+https://www.namesilo.com/api/checkRegisterAvailability
+
+https://www.namesilo.com/api/checkRegisterAvailability?version=1&type=xml&key=YOUR_API_KEY&domains=example.com
+
+2. Add ability for customers to login.

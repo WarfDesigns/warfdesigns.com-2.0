@@ -1,0 +1,23 @@
+<h1>Header</h1>
+<p>The header will be transparent until people scroll down to a certain spot. When they move down a little it will begin to change color.</p>
+
+<h1>Video Section</h1>
+<p>The next section will have a video background, with an overlay and some text on top.
+
+<h1>Products Section</h1>
+<p>The products will be displayed here. A total of 8 services.</p>
+
+<h1>Reviews Section</h1>
+<p>This will literally just have some Google reviews on there.</p>
+
+<h1>Section</h1>
+<p>This next section is just an inspiring message.</p>
+
+<h1>Showcase Section</h1>
+<p>This section will have a showcase gallery of work I have done.</p>
+
+<h1>Let's Connect Form</h1>
+<p>This section will have a contact form for customers to fill out to contact me.</p>
+
+<h1>Footer</h1>
+<p>This will have social icons, couple pages, and it will have some other icons and logos afffiliated or that partner with me.</p>
