@@ -1,0 +1,66 @@
+
+
+/* Review Card Styles */
+.review-item {
+  background: #fff; /* White card background */
+  border-radius: 8px; /* Rounded corners */
+  padding: 15px;
+  margin-bottom: 20px; /* Space between cards */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft drop shadow */
+  transition: box-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+.review-item:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Larger shadow on hover */
+}
+
+.review-author {
+  font-weight: bold;
+  font-size: 1.1em;
+  color: #333;
+}
+
+.review-date {
+  font-size: 0.85em;
+  color: #777;
+  margin-left: 5px;
+}
+
+.review-text {
+  font-size: 1em;
+  line-height: 1.4;
+  margin-top: 10px;
+}
+
+/* Star Styles */
+.review-stars ul {
+  display: inline-block;
+  list-style: none;
+  padding: 0;
+  margin: 5px 0;
+}
+
+.review-stars ul li {
+  float: left;
+  margin-right: 5px;
+}
+
+.review-stars ul li i {
+  color: #E4B248; /* Active star color */
+  font-size: 14px;
+}
+
+.review-stars ul li i.inactive {
+  color: #c6c6c6; /* Inactive star color */
+}
+
+.star:after {
+  content: "\2605"; /* Unicode star character */
+}
+
+/* Optional: Clear floats inside review stars */
+.review-stars::after {
+  content: "";
+  display: table;
+  clear: both;
+}

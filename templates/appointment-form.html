@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+  <html lang="en">
+    <div>
+      <form id="Form" action="/php/appointment-form.php" method="POST">
+        <label for="name">Full Name (letters and spaces only):</label>
+        <input type="text" id="name" name="name" required />
+        <div style="color:red; display:none;" id="NameError">Please enter a valid name (letters and spaces only).</div>
+        <br>
+        <label for="email">Email: </label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" required/><br>
+        <div style="color:red; display:none;" id="PhoneError" class="error">Please enter a valid phone number (letters and spaces only).</div>
+        <br>
+        <label for="date">Preferred Appointment Date:</label>
+        <input type="date" id="date" name="date" required><br><br>
+        <label for="notes">What can we help you with?</label>
+        <textarea id="notes" name="notes" rows="6" cols="40" required></textarea><br><br>
+        <div class="g-recaptcha" data-sitekey="6LewKo4rAAAAAFnveZyjnnKEZDtG0dgiu-jitiSP"></div>
+        <br>
+        <button type="submit">Submit</button>
+      </form> 
+    </div>
+  </html>

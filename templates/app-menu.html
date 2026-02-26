@@ -1,0 +1,42 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<div class="appmenucontainer">
+    <a href="tel:+17404387646">
+        <div class="appMenu">
+            <i class="fas fa-phone phone-icon"></i>
+            <p class="menu-header">Call Me</p>
+        </div>
+    </a>
+    <button class="appMenu appMenuBtn" id="mobileMenuBtn" type="button" aria-haspopup="dialog" aria-expanded="false">
+        <i class="fas fa-bars"></i>
+        <p class="menu-header">Menu</p>
+    </button>
+    <a href="sms:+17404387646">
+        <div class="appMenu">
+            <i class="fas fa-comment-alt"></i>
+            <p class="menu-header">Text Me</p>
+        </div>
+    </a>
+</div>
+
+<div class="mobileMenuBackdrop" id="mobileMenuBackdrop" hidden></div>
+
+<aside class="mobileMenuSheet" id="mobileMenuSheet" hidden role="dialog" aria-modal="true" aria-label="Site menu">
+    <div class="mobileMenuHandle" aria-hidden="true"></div>
+
+    <div class="mobileMenuHeader">
+        <div class="mobileMenuTitle">Menu</div>
+        <button class="mobileMenuClose" id="mobileMenuClose" type="button" aria-label="Close menu">
+            <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <div class="mobileMenuLinks">
+        <!-- Mobile Menu Links -->
+        <a href="/index.html">Home</a>
+        <a href="/services/index.html">Services</a>
+        <a href="/pages/portfolio/index.html">Portfolio</a>
+        <a href="/pages/discounts.html">Discounts</a>
+        <a href="/pages/contact-us.html">Contact Us</a>
+    </div>
+</aside>
