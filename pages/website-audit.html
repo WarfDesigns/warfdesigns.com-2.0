@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Trade+Winds&display=swap" rel="stylesheet">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Website Audit | Warf Designs</title>
+        <meta name="description" content="Launch a website audit by entering your website URL.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/../../css/styles.css">
+        <style>
+            .audit-form {
+                max-width: 600px;
+                margin: 0 auto;
+                display: grid;
+                gap: 12px;
+            }
+
+            .audit-form label {
+                font-weight: 700;
+            }
+
+            .audit-form input[type="url"] {
+                width: 100%;
+               padding: 12px;
+                border-radius: 6px;
+                border: 1px solid #333;
+                font-size: 16px;
+            }
+
+            .audit-help {
+                margin-top: 10px;
+                margin-bottom: 20px;
+            }
+
+            .audit-status {
+                margin-top: 18px;
+                font-weight: 700;
+                text-align: center;
+            }
+
+            .audit-status.error {
+                color: #ef4444;
+            }
+
+            .audit-status.success {
+                color: #22c55e;
+            }
+
+            .audit-status a {
+                color: inherit;
+                text-decoration: underline;
+            }
+
+            .audit-results {
+                margin-top: 24px;
+                border: 1px solid #1f2937;
+                border-radius: 10px;
+                padding: 20px;
+                background-color: #111827;
+            }
+
+            .audit-results h2 {
+                margin-top: 0;
+            }
+
+            .audit-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 12px;
+                margin-bottom: 20px;
+            }
+
+            .audit-score-card {
+                border: 1px solid #374151;
+                border-radius: 8px;
+                padding: 12px;
+                text-align: center;
+                background-color: #0b1220;
+            }
+
+            .audit-score-card p {
+                margin: 4px 0;
+            }
+
+            .audit-metrics {
+                list-style: none;
+                padding-left: 0;
+                margin: 0;
+                display: grid;
+                gap: 6px;
+            }
+
+            .audit-metrics li {
+                border-bottom: 1px solid #374151;
+                padding: 8px 0;
+            }
+
+            .audit-metrics li:last-child {
+                border-bottom: none;
+            }
+
+            .hidden {
+                display: none;
+            }
+        </style>
+    </head>
+    <div id="analytics"></div>
+    <body>
+        <div id="nav"></div>
+        <div class="container">
+            <section>
+                <h1>Website Audit</h1>
+<p class="center audit-help">Enter a full website address below and submit to generate a live audit right on this page.</p>
+
+                <form id="website-form" class="audit-form">
+                    <label for="website-address">Website Address</label>
+                    <input
+                        id="website-address"
+                        name="website-address"
+                        type="url"
+                        placeholder="https://example.com"
+                        autocomplete="url"
+                        required
+                    >
+                    <button class="epicbtn" type="submit">Submit</button>
+</form>
+
+                <p id="audit-status" class="audit-status" aria-live="polite"></p>
+
+                <section id="audit-results" class="audit-results hidden" aria-live="polite">
+                    <h2>Custom Website Audit</h2>
+                    <p id="audited-site"></p>
+                    <div id="audit-grid" class="audit-grid"></div>
+                    <h3>Key Metrics</h3>
+                    <ul id="audit-metrics" class="audit-metrics"></ul>
+                </section>
+            </section>
+        </div>
+        <footer id="footer"><script defer async src='https://cdn.trustindex.io/loader.js?f2a805d49e2247534c2688b9033'></script></footer>
+        <div id="appMenu"></div>
+
+        <script>
+            const websiteForm = document.getElementById('website-form');
+            const websiteAddressInput = document.getElementById('website-address');
+            const statusElement = document.getElementById('audit-status');
+            const resultsElement = document.getElementById('audit-results');
+            const auditedSiteElement = document.getElementById('audited-site');
+            const auditGridElement = document.getElementById('audit-grid');
+            const metricsElement = document.getElementById('audit-metrics');
+
+            const buildPagespeedLabUrl = (websiteUrl) => {
+                const encodedUrl = encodeURIComponent(websiteUrl);
+                return `https://pagespeed.web.dev/analysis?url=${encodedUrl}`;
+            };
+
+            const categoryLabels = {
+                performance: 'Performance',
+                accessibility: 'Accessibility',
+                'best-practices': 'Best Practices',
+                seo: 'SEO'
+            };
+
+            const metricKeys = [
+                ['first-contentful-paint', 'First Contentful Paint'],
+                ['largest-contentful-paint', 'Largest Contentful Paint'],
+                ['speed-index', 'Speed Index'],
+                ['total-blocking-time', 'Total Blocking Time'],
+                ['cumulative-layout-shift', 'Cumulative Layout Shift']
+            ];
+
+            const setStatus = (message, type = '', allowHtml = false) => {
+                if (allowHtml) {
+                    statusElement.innerHTML = message;
+                } else {
+                    statusElement.textContent = message;
+                }
+
+ statusElement.className = `audit-status ${type}`.trim();
+            };
+
+            const normalizeUrl = (input) => {
+                const withProtocol = /^https?:\/\//i.test(input) ? input : `https://${input}`;
+                const parsedUrl = new URL(withProtocol);
+
+                if (!parsedUrl.hostname) {
+                    throw new Error('Please enter a valid website address.');
+                }
+
+                return parsedUrl.toString();
+            };
+
+            const renderResults = (requestedUrl, data) => {
+                const lighthouseResult = data?.lighthouseResult;
+
+                if (!lighthouseResult) {
+                    throw new Error('No audit data was returned for that website.');
+                }
+
+                const categories = lighthouseResult.categories || {};
+                const audits = lighthouseResult.audits || {};
+
+                auditedSiteElement.textContent = `Audited Site: ${requestedUrl}`;
+
+                auditGridElement.innerHTML = '';
+                Object.entries(categoryLabels).forEach(([key, label]) => {
+                    const score = categories[key]?.score;
+                    const percentage = typeof score === 'number' ? Math.round(score * 100) : 'N/A';
+
+                    const scoreCard = document.createElement('article');
+                    scoreCard.className = 'audit-score-card';
+                    scoreCard.innerHTML = `
+                        <p>${label}</p>
+                        <p><strong>${percentage}</strong></p>
+                    `;
+                    auditGridElement.appendChild(scoreCard);
+                });
+
+                metricsElement.innerHTML = '';
+                metricKeys.forEach(([metricKey, metricLabel]) => {
+                    const metric = audits[metricKey];
+
+                    if (!metric) {
+                        return;
+                    }
+
+                    const listItem = document.createElement('li');
+                    const value = metric.displayValue || 'N/A';
+                    listItem.textContent = `${metricLabel}: ${value}`;
+                    metricsElement.appendChild(listItem);
+                });
+
+                resultsElement.classList.remove('hidden');
+            };
+
+            websiteForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const websiteAddress = websiteAddressInput.value.trim();
+
+                if (!websiteAddress) {
+                    setStatus('Please enter a website address.', 'error');
+                    return;
+                }
+
+                let normalizedUrl = '';
+
+                try {
+                    normalizedUrl = normalizeUrl(websiteAddress);
+                } catch (error) {
+                    setStatus(error.message, 'error');
+                    return;
+                }
+
+                setStatus('Generating your custom audit. This can take a few seconds...');
+                resultsElement.classList.add('hidden');
+
+                const endpoint = `/php/pagespeed-audit.php?url=${encodeURIComponent(normalizedUrl)}`;
+                const pagespeedLabUrl = buildPagespeedLabUrl(normalizedUrl);
+
+                try {
+                    const response = await fetch(endpoint);
+                    const auditData = await response.json();
+
+                    if (auditData?.error?.message) {
+                        throw new Error(auditData.error.message);
+                    }
+
+                    if (!response.ok) {
+                        throw new Error('Unable to generate audit results right now. Please try again.');
+                    }
+
+                    renderResults(normalizedUrl, auditData);
+                    setStatus('Your custom website audit is ready.', 'success');
+                } catch (error) {
+                    setStatus(`Live results are currently unavailable right now. <a href="${pagespeedLabUrl}" target="_blank" rel="noopener noreferrer">Open PageSpeed Insights as a fallback</a>.`, 'error', true);
+                }
+        </script>
+        <script src="/js/script.js"></script>
+    </body>
+</html>
