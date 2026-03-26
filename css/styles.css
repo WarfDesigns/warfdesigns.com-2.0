@@ -1794,3 +1794,8 @@ p {
     background: #ffffff;
     color: #000000;
 }
+.evenly {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px;  
+}
