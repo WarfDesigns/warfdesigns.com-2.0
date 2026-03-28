@@ -54,8 +54,13 @@
     height: auto;
     display: block;
     margin: 0 auto;
-    padding-bottom: 50%;
-    padding-top: 50%;
+    padding-bottom: 20vh;
+    padding-top: 20vh;
+}
+
+.defer-section {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 900px;
 }
 .center {
     text-align: center;

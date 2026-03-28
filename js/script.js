@@ -191,7 +191,6 @@ function deferNonCriticalTemplates() {
     loadTemplate('/templates/error.html', 'error');
     loadTemplate('/templates/product-display.html', 'productDisplay');
     loadTemplate('/templates/header.html', 'header');
-    loadTemplate('/templates/services.html', 'services');
     loadTemplate('/templates/google-analytics.html', 'analytics');
   };
 
@@ -200,6 +199,39 @@ function deferNonCriticalTemplates() {
   } else {
     setTimeout(nonCriticalLoads, 1200);
   }
+}
+
+function loadTemplateWhenVisible(url, elementId, options = {}) {
+  const target = document.getElementById(elementId);
+  if (!target) return;
+
+  let loaded = false;
+  const loadOnce = () => {
+    if (loaded) return;
+    loaded = true;
+    loadTemplate(url, elementId, options.onLoad);
+  };
+
+  if (options.immediate) {
+    loadOnce();
+    return;
+  }
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        loadOnce();
+        observer.disconnect();
+      });
+    }, { rootMargin: options.rootMargin || '300px 0px' });
+
+    observer.observe(target);
+    return;
+  }
+
+  const fallbackDelay = options.fallbackDelay ?? 1500;
+  setTimeout(loadOnce, fallbackDelay);
 }
 
 function initDeferredHeroVideo() {
@@ -240,12 +272,25 @@ document.addEventListener("DOMContentLoaded", () => {
   initVideoPlaceholders();
   initDeferredHeroVideo();
   loadTemplate('/templates/menu.html', 'nav');
-  loadTemplate('/templates/footer.html', 'footer');
   loadTemplate('/templates/review-slider.html', 'reviewSlider', initReviewSlider);
   window.addEventListener('load', () => initReviewSlider(), { once: true });
-  loadTemplate('/templates/app-menu.html', 'appMenu');
-  loadTemplate('/templates/appointment-form.html', 'appointmentForm');
-  loadTemplate('/templates/contact.html', 'contact');
+
+  loadTemplateWhenVisible('/templates/services.html', 'services', {
+    rootMargin: '200px 0px'
+  });
+  loadTemplateWhenVisible('/templates/footer.html', 'footer', {
+    rootMargin: '500px 0px'
+  });
+  loadTemplateWhenVisible('/templates/contact.html', 'contact', {
+    rootMargin: '300px 0px'
+  });
+  loadTemplateWhenVisible('/templates/appointment-form.html', 'appointmentForm', {
+    rootMargin: '450px 0px'
+  });
+  loadTemplateWhenVisible('/templates/app-menu.html', 'appMenu', {
+    immediate: true
+  });
+
   deferNonCriticalTemplates();
 });
 
