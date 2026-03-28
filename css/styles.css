@@ -607,15 +607,25 @@ label {
     transition: background-color 0.35s ease, color 0.35s ease;
 }
 
+#nav .menu {
+    position: relative;
+}
+
 #nav ul {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #nav ul li {
-    position: relative; 
-    }
+    position: relative;
+}
+#nav .menu > ul > li.pay-us-link {
+    position: absolute;
+    right: 0;
+}
 #nav ul li a {
     display: block;
     color: #fff;
@@ -1161,15 +1171,25 @@ p {
 #nav .menucontainer {
     transition: background-color 0.35s ease, color 0.35s ease;
 }
+#nav .menu {
+    position: relative;
+}
+
 #nav ul {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #nav ul li {
-    position: relative; 
-    }
+    position: relative;
+}
+#nav .menu > ul > li.pay-us-link {
+    position: absolute;
+    right: 0;
+}
 #nav ul li a {
     display: block;
     color: #fff;
@@ -1798,4 +1818,17 @@ p {
     display: flex;
     justify-content: space-evenly;
     gap: 10px;  
+}
+/* Menu alignment: keep main nav centered while pushing Pay Us to far right */
+.menu .menu-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.menu .menu-list > .pay-us-item {
+    margin-left: auto;
 }
