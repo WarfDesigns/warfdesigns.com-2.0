@@ -158,22 +158,95 @@ function initReviewSlider(root = document) {
   updateSlide();
 }
 
+function createYouTubeEmbed(videoId, title = 'Warf Designs showcase video') {
+  const iframe = document.createElement('iframe');
+  iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}`;
+  iframe.width = '100%';
+  iframe.height = '100%';
+  iframe.loading = 'lazy';
+  iframe.title = title;
+  iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+  iframe.setAttribute('allowfullscreen', '');
+  iframe.setAttribute('frameborder', '0');
+  return iframe;
+}
+
+function initVideoPlaceholders(root = document) {
+  root.querySelectorAll('[data-youtube-id]').forEach((button, index) => {
+    if (button.dataset.placeholderInitialized === 'true') return;
+    button.dataset.placeholderInitialized = 'true';
+
+    button.addEventListener('click', () => {
+      const videoId = button.dataset.youtubeId;
+      if (!videoId) return;
+
+      const iframe = createYouTubeEmbed(videoId, `Warf Designs showcase video ${index + 1}`);
+      button.replaceWith(iframe);
+    });
+  });
+}
+
+function deferNonCriticalTemplates() {
+  const nonCriticalLoads = () => {
+    loadTemplate('/templates/error.html', 'error');
+    loadTemplate('/templates/product-display.html', 'productDisplay');
+    loadTemplate('/templates/header.html', 'header');
+    loadTemplate('/templates/services.html', 'services');
+    loadTemplate('/templates/google-analytics.html', 'analytics');
+  };
+
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(nonCriticalLoads, { timeout: 2500 });
+  } else {
+    setTimeout(nonCriticalLoads, 1200);
+  }
+}
+
+function initDeferredHeroVideo() {
+  const video = document.querySelector('.hero-bg-video[data-video-src]');
+  if (!video || video.dataset.videoHydrated === 'true') return;
+
+  const hydrateVideo = () => {
+    if (video.dataset.videoHydrated === 'true') return;
+    const src = video.dataset.videoSrc;
+    if (!src) return;
+
+    const source = document.createElement('source');
+    source.src = src;
+    source.type = 'video/mp4';
+    video.appendChild(source);
+    video.dataset.videoHydrated = 'true';
+    video.load();
+  };
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        hydrateVideo();
+        observer.disconnect();
+      });
+    }, { rootMargin: '250px 0px' });
+
+    observer.observe(video);
+  } else {
+    hydrateVideo();
+  }
+}
 
 // Load templates when the DOM is fully loaded
 document.addEventListener("DOMContentLoaded", () => {
   initBackToTopButton();
+  initVideoPlaceholders();
+  initDeferredHeroVideo();
   loadTemplate('/templates/menu.html', 'nav');
   loadTemplate('/templates/footer.html', 'footer');
   loadTemplate('/templates/review-slider.html', 'reviewSlider', initReviewSlider);
   window.addEventListener('load', () => initReviewSlider(), { once: true });
   loadTemplate('/templates/app-menu.html', 'appMenu');
-  loadTemplate('/templates/error.html', 'error');
-  loadTemplate('/templates/product-display.html', 'productDisplay');
   loadTemplate('/templates/appointment-form.html', 'appointmentForm');
   loadTemplate('/templates/contact.html', 'contact');
-  loadTemplate('/templates/header.html', 'header');
-  loadTemplate('/templates/services.html', 'services');
-  loadTemplate('/templates/google-analytics.html', 'analytics');
+  deferNonCriticalTemplates();
 });
 
 //This function loads more videos when the button is clicked
@@ -191,20 +264,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function loadVideos() {
     const next = videos.slice(loaded, loaded + step);
-    next.forEach(id => {
-      const iframe = document.createElement("iframe");
-      iframe.src = `https://www.youtube.com/embed/${id}?mute=1&loop=1&playlist=${id}`;
-      iframe.width = "100%";
-      iframe.height = "100%";
-      iframe.loading = "lazy";
-      iframe.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
-      iframe.setAttribute("allowfullscreen", "");
-      iframe.setAttribute("frameborder", "0");
-      iframe.style.marginBottom = "30px";
-      container.appendChild(iframe);
+    next.forEach((id, index) => {
+      const cleanId = id.replace('&t', '').trim();
+      if (!cleanId) return;
+      const videoNumber = loaded + index + 1;
+
+      const placeholder = document.createElement('button');
+      placeholder.className = 'video-placeholder';
+      placeholder.type = 'button';
+      placeholder.dataset.youtubeId = cleanId;
+      placeholder.setAttribute('aria-label', `Play Warf Designs showcase video ${videoNumber}`);
+      placeholder.innerHTML = `
+        <img src="https://i.ytimg.com/vi/${cleanId}/hqdefault.jpg" alt="Video thumbnail for Warf Designs showcase video ${videoNumber}" loading="lazy" decoding="async">
+        <span class="video-placeholder__play" aria-hidden="true">▶</span>
+      `;
+      container.appendChild(placeholder);
     });
 
     loaded += step;
+    initVideoPlaceholders(container);
     if (loaded >= videos.length) {
       btn.style.display = "none";
     }

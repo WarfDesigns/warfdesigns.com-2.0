@@ -9,21 +9,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Trade+Winds&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Trade+Winds&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Trade+Winds&display=swap"></noscript>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Warf Designs | Web, Digitizing & Domain Services</title>
     <meta name="description" content="Warf Designs offers rare digitizing services, web solutions, and domain search tools. Explore our work and connect with us today!">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preload" as="image" href="/img/logo/Logo-White-Only.webp" fetchpriority="high">
     <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
     <div id="analytics"></div>   
         <div id="nav"></div>
         <div class="hero-bg">
-             <video class="hero-bg-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
-                <source src="/img/backgrounds/endless-data.mp4" type="video/mp4">
+            <video class="hero-bg-video" autoplay muted loop playsinline preload="none" poster="/img/backgrounds/endless-data-poster.webp" aria-hidden="true" data-video-src="/img/backgrounds/endless-data.mp4">
             </video>
             <section class="hero-bg-content">
                 <img src="/img/logo/Logo-White-Only.webp" class="BigLogo" alt="Warf Designs LLC Logo" width="1200" height="1200" fetchpriority="high" decoding="async">
@@ -44,21 +45,23 @@
         <section>
         <section class="videos">
         <!-- First 4 videos already loaded -->
-        <iframe width="100%" height="100%" title="Warf Designs showcase video 1" loading="lazy" src="https://www.youtube.com/embed/Q-8yeKt1ULU?mute=1&loop=1&playlist=Q-8yeKt1ULU" frameborder="0" allowfullscreen></iframe>
-        <iframe width="100%" height="100%" title="Warf Designs showcase video 2" loading="lazy" src="https://www.youtube.com/embed/fKqzXpnBDZc?mute=1&loop=1&playlist=fKqzXpnBDZc" frameborder="0" allowfullscreen></iframe>
-        <iframe width="100%" height="100%" title="Warf Designs showcase video 3" loading="lazy" src="https://www.youtube.com/embed/aTNzEcOokZc?mute=1&loop=1&playlist=aTNzEcOokZc" frameborder="0" allowfullscreen></iframe>
-        <iframe width="100%" height="100%" title="Warf Designs showcase video 4" loading="lazy" src="https://www.youtube.com/embed/D0t36FouM7M?mute=1&loop=1&playlist=D0t36FouM7M" frameborder="0" allowfullscreen></iframe>
+        <button class="video-placeholder" type="button" data-youtube-id="Q-8yeKt1ULU" aria-label="Play Warf Designs showcase video 1">
+            <img src="https://i.ytimg.com/vi/Q-8yeKt1ULU/hqdefault.jpg" alt="Video thumbnail for Warf Designs showcase video 1" loading="lazy" decoding="async">
+            <span class="video-placeholder__play" aria-hidden="true">▶</span>
+        </button>
+        <button class="video-placeholder" type="button" data-youtube-id="fKqzXpnBDZc" aria-label="Play Warf Designs showcase video 2">
+            <img src="https://i.ytimg.com/vi/fKqzXpnBDZc/hqdefault.jpg" alt="Video thumbnail for Warf Designs showcase video 2" loading="lazy" decoding="async">
+            <span class="video-placeholder__play" aria-hidden="true">▶</span>
+        </button>
+        <button class="video-placeholder" type="button" data-youtube-id="aTNzEcOokZc" aria-label="Play Warf Designs showcase video 3">
+            <img src="https://i.ytimg.com/vi/aTNzEcOokZc/hqdefault.jpg" alt="Video thumbnail for Warf Designs showcase video 3" loading="lazy" decoding="async">
+            <span class="video-placeholder__play" aria-hidden="true">▶</span>
+        </button>
+        <button class="video-placeholder" type="button" data-youtube-id="D0t36FouM7M" aria-label="Play Warf Designs showcase video 4">
+            <img src="https://i.ytimg.com/vi/D0t36FouM7M/hqdefault.jpg" alt="Video thumbnail for Warf Designs showcase video 4" loading="lazy" decoding="async">
+            <span class="video-placeholder__play" aria-hidden="true">▶</span>
+        </button>
         </section>
-    </section>
-
-    <section class="center" style="padding-top: 20px;">
-    <button id="load-more-btn" class="epicbtn">View More Videos</button>
-    </section>
-</section>
-<section id="reviewSlider"></section>
-        </div>
-        <div class="container">
-            <section>
                 <section>
                     <h1>Search For Your Epic Domain!</h1>
                     <p>A domain name is your website’s unique address on the internet—like your digital storefront. Choosing the right domain is crucial for branding, credibility, and visibility in search engines. Whether you're launching a business, blog, or online store, the perfect domain helps customers find and trust you online. At Warf Designs, we guide you in selecting a domain that’s memorable, keyword-friendly, and built to grow with your project.</p>
