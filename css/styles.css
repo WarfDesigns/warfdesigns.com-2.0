@@ -58,6 +58,11 @@
     padding-top: 20vh;
 }
 
+.break {
+    border-top: 1px solid #ccc;
+    margin: 40px 0;
+}
+
 .defer-section {
     content-visibility: auto;
     contain-intrinsic-size: 1px 900px;
@@ -728,6 +733,12 @@ label {
     padding-bottom: 20%;
     padding-top: 20%;
 }
+
+.break {
+    border-top: 1px solid #ccc;
+    margin: 40px 0;
+}
+
 .center {
     text-align: center;
     display: flex;
@@ -1292,6 +1303,12 @@ p {
     padding-bottom: 20%;
     padding-top: 20%;
 }
+
+.break {
+    border-top: 1px solid #ccc;
+    margin: 40px 0;
+}
+
 .center {
     text-align: center;
     display: flex;
