@@ -1922,7 +1922,8 @@ p {
 
 .article-kicker {
     margin-bottom: 8px;
-    color: #8a310f;
+    color: #000;
+    font-family: "Open Sans", sans-serif;
     font-size: 0.82rem;
     font-weight: 700;
     letter-spacing: 0.09em;
