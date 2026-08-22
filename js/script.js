@@ -84,6 +84,44 @@ function setActiveNavLink() {
 
     if (isCurrentPage || isIndexMatch) {
       link.classList.add('active');
+      link.setAttribute('aria-current', 'page');
+    } else {
+      link.removeAttribute('aria-current');
+    }
+  });
+}
+
+function initAccessibility() {
+  // Give keyboard and screen-reader users a dependable way past repeated navigation.
+  let main = document.querySelector('main');
+  if (!main) {
+    const navMount = document.getElementById('nav');
+    const footerMount = document.getElementById('footer');
+    if (navMount && footerMount) {
+      main = document.createElement('main');
+      main.id = 'main-content';
+      navMount.after(main);
+      let sibling = main.nextSibling;
+      while (sibling && sibling !== footerMount) {
+        const nextSibling = sibling.nextSibling;
+        main.appendChild(sibling);
+        sibling = nextSibling;
+      }
+    }
+  }
+
+  if (main && !main.id) main.id = 'main-content';
+  if (main && !document.querySelector('.skip-link')) {
+    const skipLink = document.createElement('a');
+    skipLink.className = 'skip-link';
+    skipLink.href = `#${main.id}`;
+    skipLink.textContent = 'Skip to main content';
+    document.body.prepend(skipLink);
+  }
+
+  document.querySelectorAll('[id]').forEach((element) => {
+    if (document.querySelectorAll(`[id="${CSS.escape(element.id)}"]`).length > 1) {
+      console.warn(`Duplicate id found: ${element.id}`);
     }
   });
 }
@@ -292,6 +330,7 @@ function initDeferredHeroVideo() {
 
 // Load templates when the DOM is fully loaded
 document.addEventListener("DOMContentLoaded", () => {
+  initAccessibility();
   initBackToTopButton();
   initVideoPlaceholders();
   initDeferredHeroVideo();
@@ -405,6 +444,7 @@ function checkDomain() {
 
       if (!domain) {
         resultBox.textContent = "Please enter a domain name.";
+        resultBox.focus();
         return;
       }
 
@@ -420,16 +460,16 @@ function checkDomain() {
         const status = data.status && data.status[0].status;
         if (status.includes("inactive") || status.includes("undelegated")) {
           resultBox.textContent = `😎 ${domain} is available!`;
-          resultBox.style.color = "green";
+          resultBox.style.color = "#006b2b";
         } else {
           resultBox.textContent = `😭 ${domain} is already taken.`;
-          resultBox.style.color = "red";
+          resultBox.style.color = "#b00020";
         }
       })
       .catch(err => {
         console.error(err);
         resultBox.textContent = "Error checking domain. Try again.";
-        resultBox.style.color = "orange";
+        resultBox.style.color = "#9c2b00";
       });
     }
 
@@ -443,7 +483,14 @@ function initMobileMenu() {
   if (btn.dataset.menuInitialized === 'true') return;
 
   btn.dataset.menuInitialized = 'true';
+  let previouslyFocused;
+
+  const getFocusableElements = () => Array.from(sheet.querySelectorAll(
+    'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+  ));
+
   function openMenu() {
+    previouslyFocused = document.activeElement;
     sheet.hidden = false;
     backdrop.hidden = false;
 
@@ -453,6 +500,7 @@ function initMobileMenu() {
 
     btn.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
+    closeBtn.focus();
   }
 
   function closeMenu() {
@@ -463,6 +511,7 @@ function initMobileMenu() {
     setTimeout(() => {
       sheet.hidden = true;
       backdrop.hidden = true;
+      if (previouslyFocused) previouslyFocused.focus();
     }, 260);
   }
 
@@ -476,6 +525,19 @@ function initMobileMenu() {
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && sheet.classList.contains('is-open')) closeMenu();
+    if (e.key === 'Tab' && sheet.classList.contains('is-open')) {
+      const focusable = getFocusableElements();
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
   });
 
   sheet.addEventListener('click', (e) => {
