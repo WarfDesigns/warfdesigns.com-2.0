@@ -1,4 +1,29 @@
-// This function loads a specific page content into the 'content' element "THIS IS NOT USED YET OR FULLY CONFIGURED"// 
+const GOOGLE_ANALYTICS_MEASUREMENT_ID = 'G-GQMBC55MH4';
+
+// Analytics scripts inserted with innerHTML are not executed by browsers. Initialize
+// the Google tag directly so every page that includes this shared script is tracked.
+function initGoogleAnalytics() {
+  if (window.googleAnalyticsInitialized) return;
+
+  window.googleAnalyticsInitialized = true;
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function gtag() {
+    window.dataLayer.push(arguments);
+  };
+
+  window.gtag('js', new Date());
+  window.gtag('config', GOOGLE_ANALYTICS_MEASUREMENT_ID);
+
+  const googleTag = document.createElement('script');
+  googleTag.async = true;
+  googleTag.src = `https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS_MEASUREMENT_ID}`;
+  googleTag.id = 'google-analytics-tag';
+  document.head.appendChild(googleTag);
+}
+
+initGoogleAnalytics();
+
+// This function loads a specific page content into the 'content' element "THIS IS NOT USED YET OR FULLY CONFIGURED"//
 function loadPage(page) {
   const content = document.getElementById('content');
   if (!content) return;
@@ -191,7 +216,6 @@ function deferNonCriticalTemplates() {
     loadTemplate('/templates/error.html', 'error');
     loadTemplate('/templates/product-display.html', 'productDisplay');
     loadTemplate('/templates/header.html', 'header');
-    loadTemplate('/templates/google-analytics.html', 'analytics');
   };
 
   if ('requestIdleCallback' in window) {
