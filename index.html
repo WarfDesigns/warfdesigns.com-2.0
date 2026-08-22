@@ -66,9 +66,11 @@
                     <h1>Search For Your Epic Domain!</h1>
                     <p>A domain name is your website’s unique address on the internet—like your digital storefront. Choosing the right domain is crucial for branding, credibility, and visibility in search engines. Whether you're launching a business, blog, or online store, the perfect domain helps customers find and trust you online. At Warf Designs, we guide you in selecting a domain that’s memorable, keyword-friendly, and built to grow with your project.</p>
                         <section class="center">
-                    <input style="border: black solid 2px;" type="text" id="domainSearch" placeholder="Enter your epic domain here! (e.g., example.com)">
+                    <label for="domainSearch">Domain name</label>
+                    <input style="border: black solid 2px;" type="text" id="domainSearch" autocomplete="url" placeholder="example.com" aria-describedby="domainHelp">
+                    <span id="domainHelp" class="field-help">Enter a domain such as example.com.</span>
                         <button class="epicbtn" onclick="checkDomain()">Search</button>
-                            <div id="result"></div>
+                            <div id="result" role="status" aria-live="polite" tabindex="-1"></div>
                         </section>
                 </section>
                 <section>

@@ -1907,6 +1907,54 @@ p {
     padding: 120px 0 72px;
 }
 
+/* Shared WCAG 2.2 AA affordances */
+.skip-link {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    z-index: 100000;
+    padding: 12px 18px;
+    border: 3px solid currentColor;
+    border-radius: 4px;
+    background: #fff;
+    color: #000;
+    font-weight: 700;
+    transform: translateY(-160%);
+}
+.skip-link:focus { transform: translateY(0); }
+
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: 3px solid #0b63ce;
+    outline-offset: 3px;
+}
+
+.container p a,
+.local-article p a { text-decoration: underline; text-decoration-thickness: 0.12em; }
+
+button,
+input,
+select,
+textarea { min-height: 44px; }
+
+.field-help { display: block; margin: 0.25rem 0 0.75rem; }
+.error { color: #ff6b6b; font-weight: 700; }
+
+#nav ul li:focus-within > ul { display: block; }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    .hero-bg-video { display: none; }
+}
+
+@media (forced-colors: active) {
+    .video-placeholder__play { border: 2px solid ButtonText; }
+}
+
 .local-article {
     max-width: 820px;
     margin: 0 auto;
