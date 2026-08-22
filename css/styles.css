@@ -2082,6 +2082,7 @@ textarea { min-height: 44px; }
 }
 
 .article-card p {
+    color: #000;
     line-height: 1.65;
 }
 
