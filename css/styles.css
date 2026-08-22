@@ -1970,9 +1970,9 @@ p {
 .article-cta {
     margin-top: 48px;
     padding: 28px;
-    border-left: 6px solid #a64019;
+    border-left: 6px solid #000;
     border-radius: 12px;
-    background: #f6eee9;
+    background: #fff;
 }
 
 .article-cta-link {
@@ -1986,6 +1986,7 @@ p {
 .article-contact-link {
     display: inline-block;
     padding: 12px 4px;
+    color: #000;
     font-weight: 700;
 }
 
