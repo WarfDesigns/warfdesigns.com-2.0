@@ -20,7 +20,7 @@ function isPublicPage(string $relativePath, array $excludeFiles): bool
         return true;
     }
 
-    return str_starts_with($normalized, 'pages/') || str_starts_with($normalized, 'services/');
+    return str_starts_with($normalized, 'pages/') || str_starts_with($normalized, 'services/') || str_starts_with($normalized, 'articles/');
 }
 
 function getPageTitle(string $filePath): string
