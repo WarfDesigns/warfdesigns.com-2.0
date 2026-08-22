@@ -1931,6 +1931,89 @@ p {
 .container p a,
 .local-article p a { text-decoration: underline; text-decoration-thickness: 0.12em; }
 
+/* Remote assistance service page */
+.remote-assistance { padding-top: 100px; }
+.remote-assistance > section { margin-top: 56px; }
+.remote-hero { max-width: 850px; margin: 0 auto; text-align: center; }
+.remote-eyebrow {
+    margin-bottom: 4px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+.remote-lead { max-width: 760px; margin: 0 auto 28px; font-size: 1.1rem; }
+.remote-button {
+    display: inline-block;
+    padding: 12px 24px;
+    border: 2px solid #000;
+    border-radius: 6px;
+    background: #000;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none !important;
+}
+.remote-button:hover,
+.remote-button:focus-visible { background: #fff; color: #000; }
+.remote-grid { align-items: stretch; }
+.remote-card,
+.remote-step {
+    padding: 24px;
+    border: 1px solid #d6d6d6;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+.remote-card h3,
+.remote-step h3 { margin-top: 0; }
+.remote-card li + li { margin-top: 8px; }
+.remote-pricing {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    align-items: center;
+    padding: 32px;
+    border-radius: 8px;
+    background: #f0f0f0;
+}
+.remote-pricing h2 { margin: 0; text-align: left; }
+.remote-price { margin: 0; text-align: center; }
+.remote-price strong { display: block; font-size: clamp(3rem, 8vw, 5rem); line-height: 1; }
+.remote-price span { display: block; font-weight: 700; }
+.remote-step { text-align: center; }
+.remote-step > span {
+    display: inline-grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border-radius: 50%;
+    background: #000;
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+.remote-note { padding: 28px; border-left: 5px solid #000; background: #f0f0f0; }
+.remote-note h2 { margin-top: 0; text-align: left; }
+.remote-cta {
+    padding: 36px 24px;
+    border-radius: 8px;
+    background: #000;
+    color: #fff;
+    text-align: center;
+}
+.remote-cta h2,
+.remote-cta a { color: #fff; }
+.remote-button-light { border-color: #fff; background: #fff; color: #000 !important; }
+.remote-button-light:hover,
+.remote-button-light:focus-visible { background: #000; color: #fff !important; }
+
+@media (max-width: 739px) {
+    .remote-assistance { padding-top: 48px; }
+    .remote-assistance > section { margin-top: 38px; }
+    .remote-pricing { grid-template-columns: 1fr; padding: 24px; }
+    .remote-pricing h2 { text-align: center; }
+}
+
 button,
 input,
 select,
